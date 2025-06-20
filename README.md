@@ -1,3 +1,24 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Sales-by-Customers-orders-Analysis
 📁 sql-sales-analysis/
 ├── customers.csv         # Synthetic customers data
@@ -51,7 +72,7 @@ Total value of the order in USD
 	•	Subqueries and CTEs
 
  SQL Queries
- ---Total Amount Spent by each customer
+ 
 SELECT 
 C.customer_id,
 c.name,
@@ -62,7 +83,7 @@ ON C.customer_id = O.order_id
 GROUP BY C.customer_id,C.name
 ORDER BY Total_spent DESC ; 
 
----customers who haven't placed orders
+
 SELECT 
 C.customer_id,
 c.name,
@@ -73,8 +94,6 @@ orders_dataset O
 ON C.customer_id= O.customer_id
 WHERE O.order_id IS NULL ;
 
-
----Customers whose order amount exceeds #100,000
 SELECT 
 customer_id,name
 FROM customers_dataset
@@ -83,15 +102,13 @@ FROM orders_dataset
 GROUP BY customer_id
 HAVING SUM(amount) >100000);
 
-
----Most Recent order per customer
 WITH Rankedorders AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY Customer_id ORDER BY order_date DESC) AS rn
 FROM orders_dataset)
 SELECT *
 FROM Rankedorders
 ORDER BY customer_id,rn;
 
----Count of orders per status per country
+
 SELECT c.country,
 o.status,
 COUNT(*) AS order_count
@@ -108,7 +125,6 @@ FROM orders_dataset
 GROUP BY customer_id) AS sub JOIN customers_dataset C ON sub.customer_id=sub.customer_id
 ORDER BY Total_spent DESC;
 
----Total numbers of Orders and Average amount per customer
 SELECT 
 c.customer_id,
 c.name,
@@ -118,23 +134,20 @@ FROM customers_dataset c
 LEFT JOIN orders_dataset o  ON C.customer_id= o.order_id
 GROUP BY C.customer_id,C.name
 ORDER BY Total_order DESC;
----Customer who made the highest amount----
+
 SELECT *
 FROM customers_dataset
 WHERE customer_id IN (SELECT customer_id FROM orders_dataset WHERE amount= (SELECT MAX(amount) FROM orders_dataset));
 
----Customers who has the lowest amount----
 SELECT*
 FROM customers_dataset
 WHERE customer_id IN (SELECT customer_id FROM orders_dataset WHERE amount = (SELECT MIN(amount) FROM orders_dataset));
  
- ---Daily Order Count
 SELECT order_date,COUNT(*) AS orders_per_day
 FROM orders_dataset
 GROUP BY order_date
 ORDER BY orders_per_day;
 
----Sales Based on Region
 SELECT 
 country,SUM(amount)AS country_sales
 FROM customers_dataset
