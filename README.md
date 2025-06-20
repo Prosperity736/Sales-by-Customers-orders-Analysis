@@ -155,9 +155,17 @@ JOIN orders_dataset ON customers_dataset.customer_id= orders_dataset.customer_id
 GROUP BY country
 ORDER BY country_sales DESC ;
 
+SELECT customer_id, SUM(total_amount) AS total_spent
+FROM orders
+GROUP BY customer_id
+ORDER BY total_spent DESC
+LIMIT 5;
 
-
-
+SELECT c.region, SUM(o.total_amount) AS region_sales
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+GROUP BY c.region
+ORDER BY region_sales DESC;
 
 
 
