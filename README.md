@@ -71,7 +71,7 @@ Total value of the order in USD
 	•	Customer segmentation (new vs repeat)
 	•	Subqueries and CTEs
 
- SQL Queries
+ ```sql
  
 SELECT 
 C.customer_id,
