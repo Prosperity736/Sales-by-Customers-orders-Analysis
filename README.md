@@ -18,7 +18,6 @@
 
 
 
-
 # Sales-by-Customers-orders-Analysis
 📁 sql-sales-analysis/
 ├── customers.csv         # Synthetic customers data
